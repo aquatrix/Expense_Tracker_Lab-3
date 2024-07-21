@@ -1,20 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// App.js
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Image, View } from 'react-native';
+import HomeScreenStack from './Components/HomeScreen'
+import SummaryScreen from './Components/SummaryScreen';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {height: 70, borderTopLeftRadius: 5,borderTopRightRadius: 5, backgroundColor: '#3498db'},
+          tabBarLabelStyle: {fontSize: 15},
+          tabBarActiveTintColor: 'white', 
+          tabBarInactiveTintColor: '#051923',
+          headerStyle: {
+            backgroundColor: '#0582ca',
+          },
+          headerTintColor: 'white'
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreenStack}
+          options={{ headerShown: false,
+            tabBarIcon: () => {
+              return(
+                <View style = {{padding: 6}}>
+                <Image
+                source={require("./assets/expense.png")}
+                style={{height: 30, width:30}}
+                 />
+                </View>
+                );
+              }
+           }}
+        />
+        <Tab.Screen name="Summary" component={SummaryScreen} 
+          options={{
+            tabBarIcon: () => {
+              return(
+                <Image
+                  source={require("./assets/summary.png")}
+                  style={{ height: 30, width: 30}}/>
+                );
+            }
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
